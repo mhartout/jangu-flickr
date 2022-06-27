@@ -1,0 +1,65 @@
+<div class="search">
+  <span style="padding-left:600px;"></span>
+  <input type="text" id="content" placeholder="Write something..." style="height: 20px;font-size:15px">
+  <button (click)="search()" style="font-size: 15px">search</button> <!--écrire la fonction search-->
+  <span style="padding-right:20px;"></span>
+</div>
+<div class="filter">
+  <div class="creation date">
+    Since:<input type="date" id="min-date">
+    <span style="padding-left:20px;"></span>
+    Until:<input type="date" id="max-date">
+  </div>
+  <div class="image length">
+    <legend>Select an image length:</legend>
+    <input type="radio" id="petite" name="taille" checked>
+    <label for="petite">Small</label>
+    <span style="padding-left:20px;"></span>
+    <input type="radio" id="moyenne" name="taille">
+    <label for="moyenne">Medium</label>
+    <span style="padding-left:20px;"></span>
+    <input type="radio" id="grande" name="taille">
+    <label for="grande">Large</label>
+  </div>
+  <div class="presentation">
+    <legend>Select a layout mode:</legend>
+    <input type="radio" id="liste" name="affichage" checked>
+    <label for="liste">List</label>
+    <span style="padding-left:20px;"></span>
+    <input type="radio" id="slide" name="affichage">
+    <label for="slide">Slide</label>
+  </div>
+  <div class="couleur">
+    <div id="red">
+      <span class="label color1" ><span style="padding-left:20px;"></span></span>
+      <input type="checkbox" id="1"/>
+      <input type="checkbox" id="2"/>
+      <span class="label color2"><span style="padding-left:20px;"></span></span>
+    </div>
+    <div id="yellow">
+      <span class="label color3"><span style="padding-left:20px;"></span></span>
+      <input type="checkbox" id="3"/>
+      <input type="checkbox" id="4"/>
+      <span class="label color4"><span style="padding-left:20px;"></span></span>
+    </div>
+    <div id="blue">
+      <span class="label color5"><span style="padding-left:20px;"></span></span>
+      <input type="checkbox" id="5"/>
+      <input type="checkbox" id="6"/>
+      <span class="label color6"><span style="padding-left:20px;"></span></span>
+    </div>
+    <div id="pink">
+      <span class="label color7"><span style="padding-left:20px;"></span></span>
+      <input type="checkbox" id="7"/>
+      <input type="checkbox" id="8"/>
+      <span class="label color8"><span style="padding-left:20px;"></span></span>
+    </div>
+    <div id="grey">
+      <span class="label color9"><span style="padding-left:20px;"></span></span>
+      <input type="checkbox" id="9"/>
+      <input type="checkbox" id="10"/>
+      <span class="label color10"><span style="padding-left:20px;"></span></span>
+    </div>
+  </div>
+</div>
+
