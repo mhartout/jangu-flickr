@@ -60,11 +60,16 @@ export class AppComponent {
     {
       if (data.photo.id == this.selected_photo?.id)
       {
-        console.log(data.photo);
+        
         this.selected_photo_details = data.photo;
+        if(this.selected_photo_details.owner.path_alias == null)
+        {
+          this.selected_photo_details.owner.path_alias = this.selected_photo_details.owner.nsid;
+        }
+
         this.selected_photo_details.dates.posted_str = new Date(parseInt(this.selected_photo_details.dates.posted) * 1000).toLocaleDateString("fr-FR");
         this.selected_photo_details.description._content = unescape(this.selected_photo_details.description._content);
-        this.selected_photo_url = "https://www.flickr.com/photos/" + data.photo.owner.username +
+        this.selected_photo_url = "https://www.flickr.com/photos/" + this.selected_photo_details.owner.path_alias +
     "/" + data.photo.id + "/";
       }
     });
