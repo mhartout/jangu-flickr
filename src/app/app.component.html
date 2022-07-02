@@ -1,65 +1,58 @@
-<div class="search">
-  <span style="padding-left:600px;"></span>
-  <input type="text" id="content" placeholder="Write something..." style="height: 20px;font-size:15px">
-  <button (click)="search()" style="font-size: 15px">search</button> <!--écrire la fonction search-->
-  <span style="padding-right:20px;"></span>
-</div>
-<div class="filter">
-  <div class="creation date">
-    Since:<input type="date" id="min-date">
-    <span style="padding-left:20px;"></span>
-    Until:<input type="date" id="max-date">
-  </div>
-  <div class="image length">
-    <legend>Select an image length:</legend>
-    <input type="radio" id="petite" name="taille" checked>
-    <label for="petite">Small</label>
-    <span style="padding-left:20px;"></span>
-    <input type="radio" id="moyenne" name="taille">
-    <label for="moyenne">Medium</label>
-    <span style="padding-left:20px;"></span>
-    <input type="radio" id="grande" name="taille">
-    <label for="grande">Large</label>
-  </div>
-  <div class="presentation">
-    <legend>Select a layout mode:</legend>
-    <input type="radio" id="liste" name="affichage" checked>
-    <label for="liste">List</label>
-    <span style="padding-left:20px;"></span>
-    <input type="radio" id="slide" name="affichage">
-    <label for="slide">Slide</label>
-  </div>
-  <div class="couleur">
-    <div id="red">
-      <span class="label color1" ><span style="padding-left:20px;"></span></span>
-      <input type="checkbox" id="1"/>
-      <input type="checkbox" id="2"/>
-      <span class="label color2"><span style="padding-left:20px;"></span></span>
-    </div>
-    <div id="yellow">
-      <span class="label color3"><span style="padding-left:20px;"></span></span>
-      <input type="checkbox" id="3"/>
-      <input type="checkbox" id="4"/>
-      <span class="label color4"><span style="padding-left:20px;"></span></span>
-    </div>
-    <div id="blue">
-      <span class="label color5"><span style="padding-left:20px;"></span></span>
-      <input type="checkbox" id="5"/>
-      <input type="checkbox" id="6"/>
-      <span class="label color6"><span style="padding-left:20px;"></span></span>
-    </div>
-    <div id="pink">
-      <span class="label color7"><span style="padding-left:20px;"></span></span>
-      <input type="checkbox" id="7"/>
-      <input type="checkbox" id="8"/>
-      <span class="label color8"><span style="padding-left:20px;"></span></span>
-    </div>
-    <div id="grey">
-      <span class="label color9"><span style="padding-left:20px;"></span></span>
-      <input type="checkbox" id="9"/>
-      <input type="checkbox" id="10"/>
-      <span class="label color10"><span style="padding-left:20px;"></span></span>
-    </div>
-  </div>
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#"></use></svg>
+        <span class="fs-4">FlickrClone</span>
+      </a>
+</header>
+
+<main>
+  <section class="py-1 container">
+    <div class="row py-lg-1">
+      <h4>Recherche de photos Flickr</h4>
+      <form>
+        <div class="mb-3">
+          <input class="form-control form-control-lg" type="text" placeholder="Termes de recherche" aria-label=".form-control-lg example">
+        </div>
+
+      <h5>Filtres</h5>
+
+
+<label for="before-date" class="form-label">Photos mises en ligne</label>
+<div class="input-group mb-3">
+  <span class="input-group-text">Après le</span>
+  <input type="date" class="form-control" id="after-date">
+  <span class="input-group-text">et avant le</span>
+  <input type="date" class="form-control" id="before-date">
 </div>
 
+    <div class="mb-1">
+      <label for="tags" class="form-label">Tags</label>
+      <input id="tags" class="form-control" type="text">
+
+    </div>
+
+    <div class="mb-3 form-check">
+      <input id="tags-andor" class="form-check-input" type="checkbox">
+      <label class="form-check-label" for="tags-andor">Images contenant tous les tags</label>
+    </div>
+
+    <div class="mb-3">
+      <label for="sort-type" class="form-label">Trier par</label>
+      <select id="sort-type" class="form-select">
+        <option value="1" selected>Pertinence</option>
+        <option value="2">Date de mise en ligne (crois.)</option>
+        <option value="3">Date de mise en ligne (décr.)</option>
+      </select>
+    </div>
+
+      <button type="submit" class="btn btn-primary">Chercher</button>
+
+
+
+
+
+      </form>
+    </div>
+  </section>
+
+</main>
