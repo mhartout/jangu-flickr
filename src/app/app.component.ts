@@ -4,6 +4,7 @@ import {NgForm} from '@angular/forms';
 
 import * as ApiClasses from './api-classes';
 import {Modal } from 'bootstrap'
+import {escape, unescape} from 'html-escaper';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent {
   modal_image_url: string = "";
 
   selected_photo?: ApiClasses.Photo = undefined;
+  selected_photo_details? : ApiClasses.PhotoDetailed = undefined;
 
   constructor(private user:ApiRelationService)
   {
@@ -39,10 +41,8 @@ export class AppComponent {
     else
     {
       return "https://live.staticflickr.com/"
-    + imgData.server + "/" + imgData.id + "_" + imgData.secret + "_b.jpg";
+      + imgData.server + "/" + imgData.id + "_" + imgData.secret + "_b.jpg";
     }
-
-    
   }
 
   openImageModal(imgData: ApiClasses.Photo)
@@ -51,6 +51,17 @@ export class AppComponent {
     this.selected_photo = imgData;
     this.modal_image_url = this.getFullImageLink(this.selected_photo);
 
+    this.user.getImageInfo(this.selected_photo.id, this.selected_photo.secret)
+      .subscribe((data: ApiClasses.InfoResponseRoot) =>
+    {
+      if (data.photo.id == this.selected_photo?.id)
+      {
+        console.log(data.photo);
+        this.selected_photo_details = data.photo;
+        this.selected_photo_details.dates.posted_str = new Date(parseInt(this.selected_photo_details.dates.posted) * 1000).toLocaleDateString("fr-FR");
+        this.selected_photo_details.description._content = unescape(this.selected_photo_details.description._content);
+      }
+    });
 
     const element = document.getElementById('imageModal') as HTMLElement;
     const myModal = new Modal(element);
@@ -61,13 +72,10 @@ export class AppComponent {
   {
     console.log(f.value);
 
-    this.user.getData(f.value).subscribe((data: ApiClasses.PhotoResponseRoot) => {
-      console.warn(data);
+    this.user.getSearch(f.value).subscribe((data: ApiClasses.PhotoResponseRoot) =>
+    {
       this.photos = data.photos.photo;
     });
 
-    /*this.user.getData().subscribe(data=>{
-      console.warn(data)
-    });*/
   }
 }

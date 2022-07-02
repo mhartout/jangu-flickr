@@ -104,6 +104,21 @@ body {
       </div>
       <div class="modal-body">
         <img *ngIf="modal_image_url!=''" [attr.src]="modal_image_url" class="img-fluid">
+      
+        <div *ngIf="selected_photo_details!=undefined">
+
+          <ul class="list-group">
+            <li class="list-group-item">Utilisateur: {{selected_photo_details.owner.username}}</li>
+            <li class="list-group-item">Posté le: {{this.selected_photo_details.dates.posted_str}}</li>
+
+            <li class="list-group-item">Tags:  <span *ngFor="let ta of selected_photo_details.tags.tag; index as i; first as isFirst"><span class="badge text-bg-secondary">{{ta.raw}}</span>&nbsp;</span></li>
+            <li class="list-group-item">Description: {{selected_photo_details.description._content}}</li>
+ 
+          </ul>
+
+          
+        </div>
+
       </div>
       <div class="modal-footer">
           Footer
