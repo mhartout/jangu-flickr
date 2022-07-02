@@ -106,7 +106,6 @@ body {
         <img *ngIf="modal_image_url!=''" [attr.src]="modal_image_url" class="img-fluid">
       
         <div *ngIf="selected_photo_details!=undefined">
-
           <ul class="list-group">
             <li class="list-group-item">Utilisateur: {{selected_photo_details.owner.username}}</li>
             <li class="list-group-item">Posté le: {{this.selected_photo_details.dates.posted_str}}</li>
@@ -115,13 +114,28 @@ body {
             <li class="list-group-item">Description: {{selected_photo_details.description._content}}</li>
  
           </ul>
+        </div>
 
-          
+        <br/>
+        <h6>Commentaires</h6>
+
+        <div class="card mb-4" *ngFor="let comm of selected_photo_comments; index as i; first as isFirst">
+          <div class="card-body">
+            <p>{{comm._content}}</p>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-row align-items-center">
+                <p class="small mb-0"><i>{{comm.authorname}}</i></p>
+              </div>
+              <div class="d-flex flex-row align-items-center">
+                <p class="small text-muted mb-0">{{parseDate(comm.datecreate)}}</p>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
       <div class="modal-footer">
-          Footer
+          <a [attr.href]="this.selected_photo_url">Voir sur Flickr</a>
       </div>
     </div>
   </div>

@@ -169,3 +169,30 @@
         photo: PhotoDetailed;
         stat: string;
     }
+
+     export interface Comment {
+        id: string;
+        author: string;
+        author_is_deleted: number;
+        authorname: string;
+        iconserver: string;
+        iconfarm: number;
+        datecreate: string;
+        permalink: string;
+        path_alias: string;
+        realname: string;
+        _content: string;
+        ispro: number;
+        is_ad_free: number;
+        pro_badge: string;
+    }
+
+    export interface Comments {
+        photo_id: string;
+        comment: Comment[];
+    }
+
+    export interface CommentResponseRoot {
+        comments: Comments;
+        stat: string;
+    }

@@ -19,8 +19,11 @@ export class AppComponent {
 
   modal_image_url: string = "";
 
+  selected_photo_url?: string = undefined;
+
   selected_photo?: ApiClasses.Photo = undefined;
   selected_photo_details? : ApiClasses.PhotoDetailed = undefined;
+  selected_photo_comments? : ApiClasses.Comment[] = undefined;
 
   constructor(private user:ApiRelationService)
   {
@@ -51,6 +54,7 @@ export class AppComponent {
     this.selected_photo = imgData;
     this.modal_image_url = this.getFullImageLink(this.selected_photo);
 
+
     this.user.getImageInfo(this.selected_photo.id, this.selected_photo.secret)
       .subscribe((data: ApiClasses.InfoResponseRoot) =>
     {
@@ -60,6 +64,17 @@ export class AppComponent {
         this.selected_photo_details = data.photo;
         this.selected_photo_details.dates.posted_str = new Date(parseInt(this.selected_photo_details.dates.posted) * 1000).toLocaleDateString("fr-FR");
         this.selected_photo_details.description._content = unescape(this.selected_photo_details.description._content);
+        this.selected_photo_url = "https://www.flickr.com/photos/" + data.photo.owner.username +
+    "/" + data.photo.id + "/";
+      }
+    });
+
+    this.user.getComments(this.selected_photo.id).subscribe((data: ApiClasses.CommentResponseRoot) =>
+    {
+      if (data.comments.photo_id == this.selected_photo?.id)
+      {
+        this.selected_photo_comments = data.comments.comment;
+
       }
     });
 
@@ -68,10 +83,13 @@ export class AppComponent {
     myModal.show();
   }
 
+  parseDate(f: string)
+  {
+    return (new Date(parseInt(f) * 1000).toLocaleDateString("fr-FR"));
+  }
+
   onSubmit(f: NgForm)
   {
-    console.log(f.value);
-
     this.user.getSearch(f.value).subscribe((data: ApiClasses.PhotoResponseRoot) =>
     {
       this.photos = data.photos.photo;
