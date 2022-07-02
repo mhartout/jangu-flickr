@@ -1,58 +1,116 @@
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-      <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#"></use></svg>
-        <span class="fs-4">FlickrClone</span>
-      </a>
+  <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+    <svg class="bi me-2" width="40" height="32"><use xlink:href="#"></use></svg>
+    <span class="fs-4">FlickrClone</span>
+  </a>
+
+  <style type="text/css">
+    body.modal-open {
+    overflow: hidden;
+    position: fixed;
+}
+
+a { color: inherit; } 
+
+body {
+    overflow-x: hidden;
+    overflow-y: scroll !important;
+}
+
+  </style>
+
+
 </header>
 
 <main>
   <section class="py-1 container">
     <div class="row py-lg-1">
       <h4>Recherche de photos Flickr</h4>
-      <form>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
         <div class="mb-3">
-          <input class="form-control form-control-lg" type="text" placeholder="Termes de recherche" aria-label=".form-control-lg example">
+          <input class="form-control form-control-lg" type="text" placeholder="Termes de recherche" name="main_search" ngModel>
         </div>
 
-      <h5>Filtres</h5>
+        <h5>Filtres</h5>
 
 
-<label for="before-date" class="form-label">Photos mises en ligne</label>
-<div class="input-group mb-3">
-  <span class="input-group-text">Après le</span>
-  <input type="date" class="form-control" id="after-date">
-  <span class="input-group-text">et avant le</span>
-  <input type="date" class="form-control" id="before-date">
-</div>
+        <label for="before-date" class="form-label">Photos mises en ligne</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Après le</span>
+          <input type="date" class="form-control" id="after-date" name="after_date" ngModel>
+          <span class="input-group-text">et avant le</span>
+          <input type="date" class="form-control" id="before-date" name="before_date" ngModel>
+        </div>
 
-    <div class="mb-1">
-      <label for="tags" class="form-label">Tags</label>
-      <input id="tags" class="form-control" type="text">
+        <div class="mb-1">
+          <label for="tags" class="form-label">Tags</label>
+          <input id="tags" class="form-control" type="text" name="tags" ngModel>
 
-    </div>
+        </div>
 
-    <div class="mb-3 form-check">
-      <input id="tags-andor" class="form-check-input" type="checkbox">
-      <label class="form-check-label" for="tags-andor">Images contenant tous les tags</label>
-    </div>
+        <div class="mb-3 form-check">
+          <input id="tags-require-all" class="form-check-input" type="checkbox" name="tags_require_all" ngModel>
+          <label class="form-check-label" for="tags-require-all">Images contenant tous les tags</label>
+        </div>
 
-    <div class="mb-3">
-      <label for="sort-type" class="form-label">Trier par</label>
-      <select id="sort-type" class="form-select">
-        <option value="1" selected>Pertinence</option>
-        <option value="2">Date de mise en ligne (crois.)</option>
-        <option value="3">Date de mise en ligne (décr.)</option>
-      </select>
-    </div>
-
-      <button type="submit" class="btn btn-primary">Chercher</button>
-
-
-
-
+        <div class="mb-3">
+          <label for="sort-type" class="form-label">Trier par</label>
+          <select id="sort-type" name="sort_type" class="form-select" ngModel="relevance">
+            <option value="relevance">Pertinence</option>
+            <option value="date-posted-asc">Date de mise en ligne (crois.)</option>
+            <option value="date-posted-desc">Date de mise en ligne (décr.)</option>
+          </select>
+        </div>
+        <button class="btn btn-primary">Chercher</button>
 
       </form>
     </div>
   </section>
+
+
+
+  
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        
+        <div class="col" *ngFor="let photo of photos; index as i; first as isFirst">
+          <a (click)="openImageModal(photo)">
+          <div class="card shadow-sm">
+
+            <div class="card-img-top" style="text-align: center;">
+            <img class="mx-auto" style="max-width: 100%;" [attr.src]="getImageLink(photo)" preserveAspectRatio="xMidYMid slice" focusable="false"/>
+            </div>
+
+            <div class="card-body">
+              <p class="card-text">{{photo.title}}</p>
+            </div>
+          </div>
+          </a>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="imageModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{selected_photo?.title}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img *ngIf="modal_image_url!=''" [attr.src]="modal_image_url" class="img-fluid">
+      </div>
+      <div class="modal-footer">
+          Footer
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </main>
