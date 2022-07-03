@@ -25,6 +25,9 @@ export class AppComponent {
   selected_photo_details? : ApiClasses.PhotoDetailed = undefined;
   selected_photo_comments? : ApiClasses.Comment[] = undefined;
 
+  errorMessage: string = "";
+  errorMessageFooter: string = "";
+
   constructor(private user:ApiRelationService)
   {
 
@@ -93,11 +96,43 @@ export class AppComponent {
     return (new Date(parseInt(f) * 1000).toLocaleDateString("fr-FR"));
   }
 
+  openErrorMessage(msg?: string)
+  {
+    this.errorMessageFooter = "";
+    if (msg == undefined)
+    {
+      this.errorMessage = "Erreur coté API.";
+    }
+    else
+    {
+      this.errorMessage = msg;
+
+      if (msg.startsWith("Invalid API Key"))
+      {
+        this.errorMessageFooter = "Il semblerait que cette erreur soit liée à une mauvaise clé d'API."+
+        " Les clés Flickr personnelles expirent malheureusement rapidement, merci d'en entrer une nouvelle dans src/app/api-relation.service.ts";
+      }
+
+    }
+
+    const element = document.getElementById('errorModal') as HTMLElement;
+    const myModal = new Modal(element);
+    myModal.show();
+  }
+
   onSubmit(f: NgForm)
   {
     this.user.getSearch(f.value).subscribe((data: ApiClasses.PhotoResponseRoot) =>
     {
-      this.photos = data.photos.photo;
+      if (data.stat == "fail")
+      {
+        this.openErrorMessage(data.message);
+      }
+      else
+      {
+        this.photos = data.photos.photo;
+      }
+      
     });
 
   }

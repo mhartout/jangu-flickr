@@ -8,15 +8,18 @@ import * as ApiClasses from './api-classes';
 })
 export class ApiRelationService {
 
+  // Enter a Flickr api key here.
+  private apiKey : string = "85125060cbbe43e4560ad0925a509854";
+
+
+
+
   constructor(private http:HttpClient) { }
 
   getSearch(searchData:any)
   {
-    
-
-
     let url="https://www.flickr.com/services/rest/" +
-    "?method=flickr.photos.search" +
+    "?method=flickr.photos.search&safe_search=1" +
     "&text=" + searchData.main_search + 
     "&sort=" + searchData.sort_type;
     
@@ -39,10 +42,10 @@ export class ApiRelationService {
     {
       url += "&max_upload_date=" + String(new Date(searchData.before_date).getTime() / 1000);
     }
-
+//path_alias
     console.warn(searchData);
 
-    url += "&api_key=0308979bd90a1fab733dc79b9b447aa1" +
+    url += "&api_key=" + this.apiKey +
     "&format=json&nojsoncallback=?";
 
     return this.http.get<ApiClasses.PhotoResponseRoot>(url, {responseType: 'json'})
@@ -54,7 +57,7 @@ export class ApiRelationService {
     "?method=flickr.photos.getInfo" +
     "&photo_id=" + photo_id +
     "&secret=" + photo_secret +
-    "&api_key=0308979bd90a1fab733dc79b9b447aa1" +
+    "&api_key=" + this.apiKey +
     "&format=json&nojsoncallback=?";
 
     return this.http.get<ApiClasses.InfoResponseRoot>(url, {responseType: 'json'})
@@ -65,7 +68,7 @@ export class ApiRelationService {
     let url="https://www.flickr.com/services/rest/" +
     "?method=flickr.photos.comments.getList" +
     "&photo_id=" + photo_id +
-    "&api_key=0308979bd90a1fab733dc79b9b447aa1" +
+    "&api_key=" + this.apiKey +
     "&format=json&nojsoncallback=?";
 
     return this.http.get<ApiClasses.CommentResponseRoot>(url, {responseType: 'json'})

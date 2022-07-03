@@ -61,7 +61,9 @@ body {
             <option value="date-posted-desc">Date de mise en ligne (décr.)</option>
           </select>
         </div>
-        <button class="btn btn-primary">Chercher</button>
+
+        <div class="mb-3"><button class="btn btn-primary">Chercher</button></div>
+      
 
       </form>
     </div>
@@ -136,6 +138,23 @@ body {
       </div>
       <div class="modal-footer">
           <a [attr.href]="this.selected_photo_url">Voir sur Flickr</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Erreur de l'API</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          {{errorMessage}}
+      </div>
+      <div class="modal-footer">
+          <strong>{{errorMessageFooter}}</strong>
       </div>
     </div>
   </div>

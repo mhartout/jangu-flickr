@@ -27,6 +27,7 @@
     {
         photos: PhotoResponse;
         stat: string;
+        message?: string;
     }
 
 
